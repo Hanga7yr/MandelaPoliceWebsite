@@ -4,11 +4,12 @@
         private string $header;
         private $content;
         private string $image;
+        private string $time;
         
         public function __construct() {
             $this->id = 0;
             $this->content = null;
-            $this->image = $this->header = '';
+            $this->image = $this->header =  $this->time = '';
         }
 
         public function SetID($id) {
@@ -25,6 +26,10 @@
 
         public function SetContent($content) {
             $this->content = is_array($content) ? $content : array($content);
+        }
+
+        public function SetTime($time) {
+            $this->time = $time;
         }
 
         public function AddContent($content) {
@@ -53,6 +58,9 @@
 
         public function GetContent() {
             return is_array($this->content) ? $this->content : array($this->content);
+        }
+        public function GetTime() {
+            return $this->time;
         }
     }
 

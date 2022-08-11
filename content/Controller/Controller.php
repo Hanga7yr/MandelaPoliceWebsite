@@ -14,6 +14,7 @@
                 $this->{'default'.$txtKey} = $txtValue;
 
             $this->defaultFrontNew = constant('frontNew');
+            $this->defaultMessages = constant('messages');
         }
 
         public function Error() {

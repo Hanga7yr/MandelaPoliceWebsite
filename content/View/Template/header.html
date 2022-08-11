@@ -40,7 +40,7 @@
                         foreach($navItems as $navItem) {
                     ?>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="<?= $navItem['link'] ?>">
+                            <a class="nav-link <?= $navItem['disabled'] ? 'disabled' : '' ?>" aria-current="page" href="<?= $navItem['link'] ?>">
                                 <?= $navItem['text'] ?>
                             </a>
                         </li>
@@ -57,6 +57,10 @@
                             <?= $navItemSearchTxt ?>
                         </button>
                     </form>
+
+                    <div class="mx-2">
+                        <a href="index.php?Controller=Login&Args=" class="btn btn-outline-primary">Login</a>
+                    </div>
                 </div>
             </div>
         </nav>

@@ -3,7 +3,11 @@
 
     class LoginController extends Controller {
         public function RequestLogAction($args) {
-            echo '<p>'.var_dump($args['Msg']).'</p>';
+            echo '<p>'.var_dump($args).'</p>';
+        }
+
+        public function DefaultAction($args) {
+            echo '<p>'.var_dump($args).'</p>';
         }
 
         public function LoginAction() {

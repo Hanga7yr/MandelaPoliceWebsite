@@ -1,20 +1,58 @@
 <?php require_once 'View/Template/header.html' ?>
     <div class="col-12 my-4">
-        <div class="col-6 d-flex m-auto">
-            <div class="card">
-                <?php $frontNew = isset($frontNew) ? 
-                    $frontNew : $this->defaultFrontNew ?>
-                <h5 class="card-header"><?= $frontNew->GetHeader() ?></h5>
-                <img src="<?= $frontNew->GetImage() ?>" class="card-img">
-                <div class="card-img-overlay position-absolute text-white bg-dark bg-opacity-25"
-                    style="height: 20%;float: left;position: absolute;top: auto;">
-                    <p class="card-text">
-                        <?= $frontNew->GetContent()[0] ?>
-                    </p>
-                    <?php $frontNewLink = isset($frontNewLink) ? 
-                            $frontNewLink : $this->defaultFrontNewLink; ?>
-                    <a href="<?= $frontNewLink['link'] ?>"><?= $frontNewLink['text'] ?></a>
+        <div class="row">
+            <div class="col-6 d-flex m-auto">
+                <div class="card">
+                    <?php $frontNew = isset($frontNew) ? 
+                        $frontNew : $this->defaultFrontNew ?>
+                    <h5 class="card-header"><?= $frontNew->GetHeader() ?></h5>
+                    <img src="<?= $frontNew->GetImage() ?>" class="card-img">
+                    <div class="card-img-overlay position-absolute text-white bg-dark bg-opacity-25"
+                        style="height: 20%;float: left;position: absolute;top: auto;">
+                        <p class="card-text">
+                            <?= $frontNew->GetContent()[0] ?>
+                        </p>
+                        <?php $frontNewLink = isset($frontNewLink) ? 
+                                $frontNewLink : $this->defaultFrontNewLink; ?>
+                        <a href="<?= $frontNewLink['link'] ?>"><?= $frontNewLink['text'] ?></a>
+                    </div>
                 </div>
+            </div>
+        </div>
+        <div class="row col-12">
+            <div class="row">
+                <div class="fs-2">
+                    Messages of the day:
+                </div>
+            </div>
+            <div class="row row-cols-1 row-cols-md-4 g-4">
+            <?php
+                $messages = isset($messages) ? 
+                    $messages : $this->defaultMessages;
+
+                foreach($messages as $msg) {
+            ?>
+            <div class="col">
+                <div class="card h-100">
+                    <?php if($msg->GetImage() !== '') { ?> <img src="<?= $msg->GetImage()?>" class="card-img-top" alt="..."> <?php }?>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <?= $msg->GetHeader() ?>
+                        </h5>
+                        <p class="card-text">
+                            <?= $msg->GetContent()[0] ?>
+                        </p>
+                    </div>
+                    <?php if($msg->GetTime() !== '') { ?> 
+                    <div class="card-footer">
+                        <small class="text-muted"><?= $msg->GetTime()?></small> 
+                    </div>
+                    <?php }?>
+                </div>
+            </div>
+            <?php
+                }
+            ?>
             </div>
         </div>
     </div>
