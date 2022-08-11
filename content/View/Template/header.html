@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+
+    <title><?= isset($title) ? $title : $this->defaultTitle ?></title>
+    <link rel="icon" type="image/x-icon" href="assets/img/<?= isset($faviconImg) ? $faviconImg : $this->defaultTitle ?>" />
+
+    <link href="assets/css/style.css" type="text/css" rel="stylesheet" />
+    <link href="assets/css/bootstrap/bootstrap.css" type="text/css" rel="stylesheet" />
+    <script src="assets/js/bootstrap/bootstrap.bundle.js"></script>
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="container-fluid">
+                <?php $headerLogo = isset($headerLogo) ? 
+                    $headerLogo : $this->defaultHeaderLogo; ?>
+                <a class="navbar-brand" href="<?= $headerLogo['link'] ?>">
+                    <img src="/assets/img/<?= isset($logo) ? $logo : $this->defaultLogo ?>"
+                        alt="<?= isset($logoAlt) ? $logoAlt : $this->defaultLogoAlt ?>"
+                        width="24" height="24"
+                        class="d-inline-block align-text-bottom">
+                    <?= $headerLogo['text'] ?>
+                </a>
+    
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="text-dark">
+                        <?= isset($headerShowTxt) ? 
+                            $headerShowTxt : $this->defaultHeaderShowTxt ?>
+                    </span>
+                </button>
+    
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <?php
+                        $navItems = isset($navItem) ? 
+                            $navItem : $this->defaultNavItem;
+    
+                        foreach($navItems as $navItem) {
+                    ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="<?= $navItem['link'] ?>">
+                                <?= $navItem['text'] ?>
+                            </a>
+                        </li>
+                    <?php
+                        }
+                    ?>
+                    </ul>
+    
+                    <form class="d-flex">
+                        <?php $navItemSearchTxt = isset($navItemSearch) ? 
+                            $navItemSearch : $this->defaultNavItemSearch; ?>
+                        <input class="form-control me-2" type="search" placeholder="<?= $navItemSearchTxt ?>" aria-label="<?= $navItemSearchTxt ?>">
+                        <button class="btn btn-outline-success" type="submit">
+                            <?= $navItemSearchTxt ?>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </nav>

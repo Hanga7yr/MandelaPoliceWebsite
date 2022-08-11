@@ -1,0 +1,21 @@
+<?php require_once 'View/Template/header.html' ?>
+    <div class="col-12 my-4">
+        <div class="col-6 d-flex m-auto">
+            <div class="card">
+                <?php $frontNew = isset($frontNew) ? 
+                    $frontNew : $this->defaultFrontNew ?>
+                <h5 class="card-header"><?= $frontNew->GetHeader() ?></h5>
+                <img src="<?= $frontNew->GetImage() ?>" class="card-img">
+                <div class="card-img-overlay position-absolute text-white bg-dark bg-opacity-25"
+                    style="height: 20%;float: left;position: absolute;top: auto;">
+                    <p class="card-text">
+                        <?= $frontNew->GetContent()[0] ?>
+                    </p>
+                    <?php $frontNewLink = isset($frontNewLink) ? 
+                            $frontNewLink : $this->defaultFrontNewLink; ?>
+                    <a href="<?= $frontNewLink['link'] ?>"><?= $frontNewLink['text'] ?></a>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php require_once 'View/Template/footer.html' ?>
