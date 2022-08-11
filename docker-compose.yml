@@ -1,7 +1,7 @@
 version: "3.9"
 services:
  php:
-  image: php:apache
+  build: .
   container_name: mandelapolice
   ports:
    - 80:80
