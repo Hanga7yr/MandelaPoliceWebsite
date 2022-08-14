@@ -29,13 +29,12 @@
     }
 
     # Allow Rules
-    $controllerNameAllowed = null;
+    $controllerNameAllowed = FALSE;
     switch($controllerName) {
         case 'Default':
         case 'Reports':
         case 'News':
         case 'Login':
-        case 'About':
         case 'Services':
             $controllerNameAllowed = TRUE;
             break;
@@ -45,10 +44,10 @@
     }
 
     # Is the proper controller?
-    if(!((bool) $controllerNameAllowed)
-        && !file_exists($pathToController.'/'.$controllerName.'Controller.php'))
+    if(!$controllerNameAllowed || !file_exists($pathToController.'/'.$controllerName.'Controller.php')) {
         $pathToController = $pathToController.'/'.$defaultController.'Controller.php';
-    else $pathToController = $pathToController.'/'.$controllerName.'Controller.php';
+        $controllerName = $defaultController;
+    } else $pathToController = $pathToController.'/'.$controllerName.'Controller.php';
 
     # Process Controller ACtions arguments
     if(!empty($controllerArgs) && !$controllerArgsSession)
