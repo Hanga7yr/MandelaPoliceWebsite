@@ -1,39 +1,42 @@
 <?php require_once 'View/Template/header.html' ?>
 
 <div class="col-12 d-flex justify-content-center" style="height: 50px; margin-top: calc(50vh - 25px - 56px)">
-    <form id="form_login" method="POST" action="index.php" ></form>
-    <input type="hidden" name="Controller" value="Login" />
-    <input type="hidden" name="Action" value="Login" />
+    <form id="form_login" method="POST" action="index.php"></form>
+    <input type="hidden" name="Controller" value="Login" form="form_login"/>
+    <input type="hidden" name="Action" value="Login" form="form_login"/>
     
     <div class="row d-flex align-items-center">
         <div class="col-12 ">
             <div class="mb-3 row">
                 <label for="login-username" class="col-sm-4 col-form-label"><?= t('login.body.username') ?></label>
                 <div class="col-sm-8">
-                    <input name="Args[User]" type="text" class="form-control" id="login-username">
+                    <input name="Args[User]" type="text" class="form-control" id="login-username" form="form_login">
                 </div>
             </div>
             <div class="mb-3 row">
                 <label for="login-password" class="col-sm-4 col-form-label"><?= t('login.body.password') ?></label>
                 <div class="col-sm-8">
-                    <input name="Args[Password]" type="password" class="form-control" id="login-username">
+                    <input name="Args[Password]" type="password" class="form-control" id="login-password" form="form_login">
                 </div>
             </div>
             <div class="mb-3 d-flex justify-content-center">
                 <button class="btn btn-success" type="submit" form="form_login"><?= t('login.body.login') ?></button>
             </div>
+            <div class="mb-3 d-flex fs-5 text-danger text-bold justify-content-center">
+                <?php
+                    $errors = $this->ViewModel['login.errors'] ?? null;
+                    if(isset($errors)) {
+                        foreach($errors as $error) {
+                ?>
+                <p><?= $error ?></p>
+                <?php
+                        }
+                    }
+                ?>
+            </div>
+            
         </div>
     </div>
-    <?php
-        $errors = $this->ViewModel['login.errors'] ?? null;
-        if(isset($errors)) {
-            foreach($errors as $error) {
-    ?>
-    <p>$error</p>
-    <?php
-            }
-        }
-    ?>
 </div>
 
 <?php require_once 'View/Template/footer.html' ?>

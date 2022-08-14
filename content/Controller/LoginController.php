@@ -51,9 +51,7 @@
                         null,
                         [
                             'result' => 'failure',
-                            'errors' => [
-                                $errors
-                            ]
+                            'errors' => $errors
                         ]
                     );
                 }

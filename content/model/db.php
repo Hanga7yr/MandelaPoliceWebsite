@@ -125,18 +125,11 @@
     $users[t('*.default.username')]->SetRol(t('users.rols.none'));
     
     $users[0] = new User();
-    $users[0]->SetID(['', '1']);
-    $users[0]->SetUsername('root');
-    $users[0]->SetPassword('root');
+    $users[0]->SetID(['that', '1']);
+    $users[0]->SetUsername('ThatcherDavis92');
+    $users[0]->SetPassword('a');
     $users[0]->SetIcon('');
     $users[0]->SetRol(t('users.rols.inv'));
-    
-    $users[1] = new User();
-    $users[1]->SetID(['', '2']);
-    $users[1]->SetUsername('inv1');
-    $users[1]->SetPassword('inv1');
-    $users[1]->SetIcon('');
-    $users[1]->SetRol(t('users.rols.inv'));
 
     $GLOBALS['users'] = $users;
 
