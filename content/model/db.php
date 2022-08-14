@@ -127,7 +127,7 @@
     $users[0] = new User();
     $users[0]->SetID(['that', '1']);
     $users[0]->SetUsername('ThatcherDavis92');
-    $users[0]->SetPassword('a');
+    $users[0]->SetPassword('everydaygetsdarker');
     $users[0]->SetIcon('');
     $users[0]->SetRol(t('users.rols.inv'));
 
