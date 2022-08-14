@@ -24,7 +24,13 @@
             //     }
             // }
 
-            switch($args) {
+            switch(strtolower($args)) {
+                case 'hanga7yr':
+                case 'hanga':
+                    $this->ViewModel['SearchResult'] = 'Hello there you stranger';
+
+                    $this->ViewModel['*.footer.socials.disabled'] = false;
+                    break;
                 case '':
                     $this->ViewModel['SearchResult'] = t('search.result.none');
                     break;

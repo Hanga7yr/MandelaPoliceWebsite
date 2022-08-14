@@ -36,6 +36,7 @@
         case 'News':
         case 'Login':
         case 'Services':
+        case 'Search':
             $controllerNameAllowed = TRUE;
             break;
         default:
