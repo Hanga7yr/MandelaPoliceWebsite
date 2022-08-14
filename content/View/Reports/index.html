@@ -1,0 +1,28 @@
+<?php require_once 'View/Template/header.html' ?>
+
+<div class="col-12">
+    <div class="row">
+        <div class="d-flex align-items-start my-4">
+            <div class="nav col-2 flex-column nav-pills me-2" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+            <?php $first = 0; ?>
+            <?php foreach($this->ViewModel['index.body.reports'] as $report) { ?>
+                <button class="nav-link <?= $first++ === 0 ? 'active' : ''?>" id="v-pills-<?= $report->GetStringID() ?>-tab" data-bs-toggle="pill" data-bs-target="#v-pills-<?= $report->GetStringID() ?>" type="button" role="tab" aria-controls="v-pills-<?= $report->GetStringID() ?>" aria-selected="false">
+                    <?= $report->GetHeader() ?>
+                </button>
+                <?php } ?>
+            </div>
+            <div class="tab-content col-10 border border-0 border-start border-dark ps-2" style="overflow-y: scroll; overflow-x: hidden; height: 70vh" id="v-pills-tabContent">
+            <?php $first = 0; ?>
+            <?php foreach($this->ViewModel['index.body.reports'] as $report) { ?>
+                <div class="tab-pane fade show <?= $first++ === 0 ? 'active' : ''?>" id="v-pills-<?= $report->GetStringID() ?>" role="tabpanel" aria-labelledby="v-pills-<?= $report->GetStringID() ?>-tab">
+                    <div class="col-12">
+                        <?= $report->PrintContent() ?>
+                    </div>
+                </div>
+            <?php } ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require_once 'View/Template/footer.html' ?>

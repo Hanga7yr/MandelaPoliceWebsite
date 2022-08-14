@@ -3,8 +3,8 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <title><?= isset($title) ? $title : $this->defaultTitle ?></title>
-    <link rel="icon" type="image/x-icon" href="assets/img/<?= isset($faviconImg) ? $faviconImg : $this->defaultTitle ?>" />
+    <title><?= t('index.window.title') ?></title>
+    <link rel="icon" type="image/x-icon" href="assets/img/<?= t('index.window.favicon') ?>" />
 
     <link href="assets/css/style.css" type="text/css" rel="stylesheet" />
     <link href="assets/css/bootstrap/bootstrap.css" type="text/css" rel="stylesheet" />
@@ -12,55 +12,64 @@
 </head>
 <body>
     <div class="container">
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="container-fluid">
-                <?php $headerLogo = isset($headerLogo) ? 
-                    $headerLogo : $this->defaultHeaderLogo; ?>
-                <a class="navbar-brand" href="<?= $headerLogo['link'] ?>">
-                    <img src="/assets/img/<?= isset($logo) ? $logo : $this->defaultLogo ?>"
-                        alt="<?= isset($logoAlt) ? $logoAlt : $this->defaultLogoAlt ?>"
-                        width="24" height="24"
-                        class="d-inline-block align-text-bottom">
-                    <?= $headerLogo['text'] ?>
-                </a>
-    
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="text-dark">
-                        <?= isset($headerShowTxt) ? 
-                            $headerShowTxt : $this->defaultHeaderShowTxt ?>
-                    </span>
-                </button>
-    
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <?php
-                        $navItems = isset($navItem) ? 
-                            $navItem : $this->defaultNavItem;
-    
-                        foreach($navItems as $navItem) {
-                    ?>
-                        <li class="nav-item">
-                            <a class="nav-link <?= $navItem['disabled'] ? 'disabled' : '' ?>" aria-current="page" href="<?= $navItem['link'] ?>">
-                                <?= $navItem['text'] ?>
-                            </a>
-                        </li>
-                    <?php
-                        }
-                    ?>
-                    </ul>
-    
-                    <form class="d-flex">
-                        <?php $navItemSearchTxt = isset($navItemSearch) ? 
-                            $navItemSearch : $this->defaultNavItemSearch; ?>
-                        <input class="form-control me-2" type="search" placeholder="<?= $navItemSearchTxt ?>" aria-label="<?= $navItemSearchTxt ?>">
-                        <button class="btn btn-outline-success" type="submit">
-                            <?= $navItemSearchTxt ?>
+        <div class="col-12">
+            <div class="row">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <div class="container-fluid">
+                        <a class="navbar-brand" href="<?= t('index.header.navbar.brand.link') ?>">
+                            <img src="/assets/img/<?= t('index.header.navbar.brand.img') ?>"
+                                alt="<?= t('index.header.navbar.brand.img_alt') ?>"
+                                width="24" height="24"
+                                class="d-inline-block align-text-bottom">
+                            <?= t('index.header.navbar.brand.text') ?>
+                        </a>
+            
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="text-dark">
+                                <?= t('index.header.navbar.toggler.text') ?>
+                            </span>
                         </button>
-                    </form>
+            
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <?php
+                                foreach($this->ViewModel['index.header.navbar.items'] as $navItem) {
+                                    if((Controller::IsLogged() && $navItem['required']) || !$navItem['required']) {
+                            ?>
+                                <li class="nav-item">
+                                    <a class="nav-link <?= $this->controllerName  === $navItem['controller'] ? 'active' : '' ?> <?= $navItem['disabled'] ? 'disabled' : '' ?><?= $navItem['required'] ? 'text-decoration-underline' : '' ?>" aria-current="page" href="<?= $navItem['link'] ?>">
+                                        <?= $navItem['text'] ?>
+                                    </a>
+                                </li>
+                            <?php
+                                    }
+                                }
+                            ?>
+                            </ul>
 
-                    <div class="mx-2">
-                        <a href="index.php?Controller=Login&Args=" class="btn btn-outline-primary">Login</a>
+                            <?php if(Controller::IsLogged()) { ?>
+                                <div class="fs-6 mx-4">
+                                    <span class="text-dark">Welcome <span class="text-decoration-underline text-bold"><?= $_SESSION['User']->GetUsername() ?></span></span>
+                                </div>
+                            <?php } ?>
+                            
+                            <form class="d-flex" method="GET" action="index.php">
+                                <input name="Controller" type="hidden" value="Search" />
+                                <input class="form-control me-2" name="Args" type="search" placeholder="<?= t('index.header.navbar.search.placeholder') ?>" aria-label="<?= t('index.header.navbar.search.text') ?>">
+                                <button class="btn btn-outline-success" type="submit">
+                                    <?= t('index.header.navbar.search.text') ?>
+                                </button>
+                            </form>
+
+                            <div class="mx-2">
+                                <?php  if(!Controller::IsLogged()) { ?>
+                                    <a href="<?= $this->ViewModel['index.header.navbar.login.link'] ?>" class="btn btn-outline-primary"><?= t('index.header.navbar.login.text') ?></a>
+                                <?php } else { ?>
+                                    <a href="<?= $this->ViewModel['index.header.navbar.logout.link'] ?>" class="btn btn-outline-danger"><?= t('index.header.navbar.logout.text') ?></a>
+                                <?php } ?>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </nav>
             </div>
-        </nav>
+        </div>

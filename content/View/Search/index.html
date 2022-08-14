@@ -1,0 +1,71 @@
+<?php require_once 'View/Template/header.html' ?>
+
+<div class="col-12">
+    <div class="fs-2">Search Results:</div>
+    <div class="row mt-4">
+        <div class="col-2">
+            <nav id="navbar-example3" class="navbar navbar-light bg-light flex-column align-items-stretch p-3">
+                <a class="navbar-brand" href="#"><?= t('search.body.navbar') ?></a>
+                <nav class="nav nav-pills flex-column">
+                <?php 
+                    $results = $this->ViewModel['SearchResult'];
+                    if(is_string($results)) {
+                    ?>
+                        <a class="nav-link" href="#item-text">Text</a>
+                    <?php
+                    } else if(is_array($results)) {
+                        foreach($results as $result) {
+                            if ($result instanceof Report || $result instanceof Notice) {
+                    ?>
+                        <a class="nav-link" href="#item-<?= $result->GetStringID() ?>"><?= $result->GetHeader() ?></a>
+                    <?php
+                            } else if ($result instanceof User) {
+                    ?>
+                        <a class="nav-link" href="#item-<?= $result->GetStringID() ?>"><?= $result->GetUsername() ?></a>
+                    <?php
+                            }
+                        }
+                    }
+                    ?>
+                </nav>
+            </nav>
+        </div>
+        <div class="col-10">
+            <div style="position: relative; height: 70vh; overflow-y: scroll; overflow-x:hidden; " data-bs-spy="scroll" data-bs-target="#navbar-example3" data-bs-offset="0" tabindex="0">
+                <?php
+                    $results = $this->ViewModel['SearchResult'];
+                    if(is_array($results)) {
+                        foreach($results as $result) {
+                            if ($result instanceof Report) {
+                    ?>
+                    <h4 id="item-<?= $result->GetStringID() ?>"><a href="<?= Controller::Url('News', 'Get', ['ID' => $result->GetStringID()])?>"><?= $result->GetHeader() ?></a></h4>
+                    <div class="col-12 border border-0 border-bottom border-start border-dark p-1">
+                    <?php
+                                print $result->PrintResume(-1);
+                    ?>
+                    </div>
+                    <?php
+                            } else if ($result instanceof User) {
+                    ?>
+                    <h4 id="item-<?= $result->GetStringID() ?>"><?= $result->GetHeader() ?></h4>
+                    <div class="col-12 border border-0 border-bottom border-start border-dark p-1">
+                    <?php
+                                print('User: '.$result->GetUsername());
+                    ?>
+                    </div>
+                    <?php
+                            }
+                        }
+                    } else {
+                    ?>
+                    <h4 id="item-text">Text</h4>
+                    <?php
+                        print($results);
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<?php require_once 'View/Template/footer.html' ?>

@@ -1,55 +1,58 @@
 <?php require_once 'View/Template/header.html' ?>
     <div class="col-12 my-4">
-        <div class="row">
-            <div class="col-6 d-flex m-auto">
+        <div class="row index-front-new">
+            <div class="col-6 d-flex m-auto justify-content-center">
                 <div class="card">
-                    <?php $frontNew = isset($frontNew) ? 
-                        $frontNew : $this->defaultFrontNew ?>
-                    <h5 class="card-header"><?= $frontNew->GetHeader() ?></h5>
-                    <img src="<?= $frontNew->GetImage() ?>" class="card-img">
-                    <div class="card-img-overlay position-absolute text-white bg-dark bg-opacity-25"
-                        style="height: 20%;float: left;position: absolute;top: auto;">
-                        <p class="card-text">
-                            <?= $frontNew->GetContent()[0] ?>
-                        </p>
-                        <?php $frontNewLink = isset($frontNewLink) ? 
-                                $frontNewLink : $this->defaultFrontNewLink; ?>
-                        <a href="<?= $frontNewLink['link'] ?>"><?= $frontNewLink['text'] ?></a>
+                    <h5 class="card-header"><?= $this->ViewModel['index.body.frontnew']->GetHeader() ?></h5>
+                    <img src="<?= $this->ViewModel['index.body.frontnew']->GetThumbnail() ?>" class="card-img" style="object-fit: scale-down;width:  100%;height: 50vh;">
+                    <div class="d-none d-md-block card-img-overlay position-absolute text-white bg-dark bg-opacity-75 mt-2 p-2"
+                        style="height: 15vh;float: left;position: absolute;top: calc(100% - 15vh);">
+                        <div class="card-text text-white">
+                            <span class="fs-6"><?php $this->ViewModel['index.body.frontnew']->PrintResume($this->ViewModel['news.maxlength']); ?></span>
+                        </div>
+                        <a class="text-decoration-none text-decoration-underline text-white" href="<?= Controller::Url('News', 'Get', ['ID' => $this->ViewModel['index.body.frontnew']->GetStringID()]) ?>">
+                            <span class="fs-6"><?= t('index.body.frontnew.readmore.text') ?></span>
+                        </a>
+                    </div>
+                    <div class="d-block d-md-none d-md-none bg-dark mt-2 p-2">
+                        <div class="card-text text-white">
+                            <span class="fs-6"><?php $this->ViewModel['index.body.frontnew']->PrintResume($this->ViewModel['news.maxlength']); ?></span>
+                        </div>
+                        <a class="text-decoration-none text-decoration-underline text-white" href="<?= Controller::Url('News', 'Get', ['ID' => $this->ViewModel['index.body.frontnew']->GetStringID()]) ?>">
+                            <span class="fs-6"><?= t('index.body.frontnew.readmore.text') ?></span>
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row col-12">
             <div class="row">
-                <div class="fs-2">
-                    Messages of the day:
-                </div>
+                <span class="fs-2">
+                    <?= t('index.body.messages.text') ?>
+                </span>
             </div>
             <div class="row row-cols-1 row-cols-md-4 g-4">
             <?php
-                $messages = isset($messages) ? 
-                    $messages : $this->defaultMessages;
-
-                foreach($messages as $msg) {
+                foreach($this->ViewModel['index.body.messages'] as $msg) {
             ?>
-            <div class="col">
-                <div class="card h-100">
-                    <?php if($msg->GetImage() !== '') { ?> <img src="<?= $msg->GetImage()?>" class="card-img-top" alt="..."> <?php }?>
-                    <div class="card-body">
-                        <h5 class="card-title">
-                            <?= $msg->GetHeader() ?>
-                        </h5>
-                        <p class="card-text">
-                            <?= $msg->GetContent()[0] ?>
-                        </p>
+                <div class="col">
+                    <div class="card h-100">
+                        <?php if($msg->GetThumbnail() !== '') { ?> <img src="<?= $msg->GetThumbnail() ?>" class="card-img-top" alt="..."> <?php } ?>
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                <?= $msg->GetHeader() ?>
+                            </h5>
+                            <div class="card-text">
+                                <?php $msg->PrintResume(-1); ?>
+                            </div>
+                        </div>
+                        <?php if($msg->GetTime() !== '') { ?> 
+                        <div class="card-footer">
+                            <small class="text-muted"><?= $msg->GetTime()?></small> 
+                        </div>
+                        <?php }?>
                     </div>
-                    <?php if($msg->GetTime() !== '') { ?> 
-                    <div class="card-footer">
-                        <small class="text-muted"><?= $msg->GetTime()?></small> 
-                    </div>
-                    <?php }?>
                 </div>
-            </div>
             <?php
                 }
             ?>

@@ -4,6 +4,10 @@
         private string $lastNames;
         private string $gender;
 
+        public function __construct() {
+            $this->firstName = $this->lastNames = $this->gender = '';
+        }
+
         public function SetFirstName($firstName) {
             $this->firstName = $firstName;
         }

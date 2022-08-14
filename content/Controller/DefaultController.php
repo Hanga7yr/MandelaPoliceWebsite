@@ -2,16 +2,21 @@
     require_once 'Controller/Controller.php';
 
     class DefaultController extends Controller {
+        function __construct($controllerName, $controllerAction, $controllerArgs) {
+            parent::__construct($controllerName, $controllerAction, $controllerArgs);
+
+            $this->ViewModel = array_merge($this->ViewModel, [
+                'index.body.frontnew' => $GLOBALS['news'][3],
+                'index.body.frontnew.readmore.link' => Controller::Url('News', 'Get', ['ID' => $GLOBALS['news'][0]->GetStringID()]),
+                'index.body.messages' => array_slice($GLOBALS['messages'], 0, 4),
+                'index.body.news' => $GLOBALS['news'],
+            ]);
+        }
         public function DefaultAction($args) {
-            $headerLogo = $this->defaultHeaderLogo;
-            $headerLogo['text'] .= '1';
+            $newDictionary = $GLOBALS['18i'];
+            $newDictionary['FrontNewLink']['text'] = ['1' => 'DictionaryChange'];
 
-            $frontNew = new Notice();
-            $frontNew->SetHeader('In Memorium1');
-            $frontNew->SetContent('In memory of...1');
-            $frontNew->SetImage('/assets/img/news/0/img.png');
-
-            include_once 'View/index.html';
+            $this->RenderPage('View/index.html');
         }
 
         public function AboutAction($args) {

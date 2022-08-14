@@ -1,5 +1,5 @@
 ﻿<?php
-    require_once 'model/db.php';
+    require_once 'Model/db.php';
     Controller::StartSession();
 
     $defaultController = 'Default';
@@ -32,6 +32,7 @@
     $controllerNameAllowed = null;
     switch($controllerName) {
         case 'Default':
+        case 'Reports':
         case 'News':
         case 'Login':
         case 'About':
@@ -43,14 +44,18 @@
             break;
     }
 
-    if(!((bool) $controllerNameAllowed) && !file_exists($pathToController.'/'.$controllerName.'Controller.php'))
+    # Is the proper controller?
+    if(!((bool) $controllerNameAllowed)
+        && !file_exists($pathToController.'/'.$controllerName.'Controller.php'))
         $pathToController = $pathToController.'/'.$defaultController.'Controller.php';
     else $pathToController = $pathToController.'/'.$controllerName.'Controller.php';
 
+    # Process Controller ACtions arguments
     if(!empty($controllerArgs) && !$controllerArgsSession)
-        $controllerArgsDecom = urldecode($controllerArgs);
+        $controllerArgsDecom = parse_url($controllerArgs);
     else $controllerArgsDecom = $controllerArgs;
     
+    # Create said controller, with information about itself and the actions to perform.
     require_once $pathToController;
     $controllerNameFull = $controllerName.'Controller';
     $controller = new $controllerNameFull(
@@ -59,9 +64,20 @@
         $controllerArgsDecom
     );
 
+    # Is there a proper method?
     $controllerActionFull = null;
     if(!method_exists($controller, $controllerAction.'Action')) $controllerActionFull = $defaultAction.'Action';
     else                                                        $controllerActionFull = $controllerAction.'Action';
 
+
     $controller->$controllerActionFull($controllerArgsDecom);
+    $controller->RegisterAction(
+        $controllerName,
+        $controllerAction,
+        $controllerArgs,
+
+        $controllerNameFull,
+        $controllerActionFull,
+        $controllerArgsDecom
+    );
 ?>
